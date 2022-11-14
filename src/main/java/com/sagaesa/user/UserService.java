@@ -1,4 +1,4 @@
-package com.sagaesa.User;
+package com.sagaesa.user;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

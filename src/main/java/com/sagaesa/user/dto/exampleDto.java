@@ -1,4 +1,4 @@
-package com.sagaesa.User.dto;
+package com.sagaesa.user.dto;
 
 import lombok.Getter;
 
