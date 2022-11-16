@@ -5,15 +5,10 @@ import lombok.*;
 import java.sql.Date;
 
 @Getter
-@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RecordDto {
-    private int recordId;
-
-    private Long userId;
-
+public class RecordFindOneDto {
     private Date date;
 
     private String content;
