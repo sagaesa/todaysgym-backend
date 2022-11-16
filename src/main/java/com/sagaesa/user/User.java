@@ -21,13 +21,13 @@ public class User {
     @Column(name = "user_id", nullable = false)
     private Long id;
 
-    @Column(unique = true, nullable = false, length = 20)
+    @Column(nullable = false, length = 20)
     private String name;
 
     @Column(nullable = false, length = 20)
     private String password;
 
-    @Column(unique = true, nullable = false, length = 20)
+    @Column(nullable = false, length = 20)
     private String nickname;
 
     @ManyToOne(fetch = FetchType.LAZY)
