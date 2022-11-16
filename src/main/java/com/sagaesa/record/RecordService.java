@@ -1,7 +1,7 @@
 package com.sagaesa.record;
 
 import com.sagaesa.record.dto.RecordCreateDto;
-import com.sagaesa.record.dto.RecordFindOneDto;
+import com.sagaesa.record.dto.RecordFindDto;
 import com.sagaesa.user.User;
 import com.sagaesa.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -29,12 +31,29 @@ public class RecordService {
         recordRepository.save(record);
     }
 
-    public RecordFindOneDto findOne(Long recordId) {
+    public RecordFindDto findOne(Long recordId) {
         Optional<Record> record = recordRepository.findById(recordId);
 
-        return RecordFindOneDto.builder()
+        return RecordFindDto.builder()
                 .date(record.get().getDate())
                 .content(record.get().getContent())
                 .build();
+    }
+
+    public List<RecordFindDto> findAll(Long userId) {
+        Optional<User> user = userRepository.findById(userId);
+        List<Record> records = recordRepository.findAllByUserId(user);
+        List<RecordFindDto> recordFindDtos = new ArrayList<>();
+
+        for (Record record : records) {
+            RecordFindDto recordFindDto = RecordFindDto.builder()
+                    .date(record.getDate())
+                    .content(record.getContent())
+                    .build();
+
+            recordFindDtos.add(recordFindDto);
+        }
+
+        return recordFindDtos;
     }
 }

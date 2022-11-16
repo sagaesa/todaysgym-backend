@@ -8,7 +8,7 @@ import java.sql.Date;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RecordFindOneDto {
+public class RecordFindDto {
     private Date date;
 
     private String content;
