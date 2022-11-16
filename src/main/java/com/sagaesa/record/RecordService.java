@@ -1,7 +1,7 @@
 package com.sagaesa.record;
 
 import com.sagaesa.record.dto.RecordCreateDto;
-import com.sagaesa.record.dto.RecordFindOneDto;
+import com.sagaesa.record.dto.RecordFindDto;
 import com.sagaesa.user.User;
 import com.sagaesa.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -29,10 +29,10 @@ public class RecordService {
         recordRepository.save(record);
     }
 
-    public RecordFindOneDto findOne(Long recordId) {
+    public RecordFindDto findOne(Long recordId) {
         Optional<Record> record = recordRepository.findById(recordId);
 
-        return RecordFindOneDto.builder()
+        return RecordFindDto.builder()
                 .date(record.get().getDate())
                 .content(record.get().getContent())
                 .build();
