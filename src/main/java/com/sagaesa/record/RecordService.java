@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -36,5 +38,22 @@ public class RecordService {
                 .date(record.get().getDate())
                 .content(record.get().getContent())
                 .build();
+    }
+
+    public List<RecordFindDto> findAll(Long userId) {
+        Optional<User> user = userRepository.findById(userId);
+        List<Record> records = recordRepository.findAllByUserId(user);
+        List<RecordFindDto> recordFindDtos = new ArrayList<>();
+
+        for (Record record : records) {
+            RecordFindDto recordFindDto = RecordFindDto.builder()
+                    .date(record.getDate())
+                    .content(record.getContent())
+                    .build();
+
+            recordFindDtos.add(recordFindDto);
+        }
+
+        return recordFindDtos;
     }
 }
