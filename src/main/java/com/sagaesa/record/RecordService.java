@@ -67,4 +67,8 @@ public class RecordService {
                 .content(record.getContent())
                 .build();
     }
+
+    public void delete(Long recordId) {
+        recordRepository.deleteById(recordId);
+    }
 }
