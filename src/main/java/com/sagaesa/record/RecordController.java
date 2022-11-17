@@ -54,4 +54,11 @@ public class RecordController {
 
         return new ResponseEntity<>(recordService.update(recordUpdateDto), HttpStatus.OK);
     }
+
+    @DeleteMapping
+    public ResponseEntity recordDelete(@RequestParam("recordId") Long recordId) {
+        recordService.delete(recordId);
+
+        return new ResponseEntity(HttpStatus.OK);
+    }
 }
