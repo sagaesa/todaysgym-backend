@@ -11,4 +11,5 @@ import java.util.Optional;
 public interface RecordRepository extends JpaRepository<Record, Long> {
 
     List<Record> findAllByUserId(Optional<User> user);
+
 }

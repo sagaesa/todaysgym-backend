@@ -2,6 +2,7 @@ package com.sagaesa.record;
 
 import com.sagaesa.record.dto.RecordCreateDto;
 import com.sagaesa.record.dto.RecordFindDto;
+import com.sagaesa.record.dto.RecordUpdateDto;
 import com.sagaesa.user.User;
 import com.sagaesa.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -55,5 +56,15 @@ public class RecordService {
         }
 
         return recordFindDtos;
+    }
+
+    public RecordFindDto update(RecordUpdateDto recordUpdateDto) {
+        Record record = recordRepository.findById(recordUpdateDto.getRecordId()).orElseThrow();
+        record.update(recordUpdateDto.getDate(), recordUpdateDto.getContent());
+
+        return RecordFindDto.builder()
+                .date(record.getDate())
+                .content(record.getContent())
+                .build();
     }
 }
