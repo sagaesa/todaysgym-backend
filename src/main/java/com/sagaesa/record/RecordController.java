@@ -2,6 +2,7 @@ package com.sagaesa.record;
 
 import com.sagaesa.record.dto.RecordCreateDto;
 import com.sagaesa.record.dto.RecordFindDto;
+import com.sagaesa.record.dto.RecordUpdateDto;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,4 +44,14 @@ public class RecordController {
         return new ResponseEntity<>(recordService.findAll(userId), HttpStatus.OK);
     }
 
+    @PatchMapping
+    public ResponseEntity<RecordFindDto> recordUpdate(@RequestBody Map<String, String> recordRequest) {
+        RecordUpdateDto recordUpdateDto = RecordUpdateDto.builder()
+                .recordId(Long.valueOf(recordRequest.get("recordId")))
+                .date(Date.valueOf(recordRequest.get("date")))
+                .content(recordRequest.get("content"))
+                .build();
+
+        return new ResponseEntity<>(recordService.update(recordUpdateDto), HttpStatus.OK);
+    }
 }

@@ -36,4 +36,9 @@ public class Record {
         this.content = content;
         this.userId = userId;
     }
+
+    public void update(Date date, String content) {
+        this.date = date;
+        this.content = content;
+    }
 }
