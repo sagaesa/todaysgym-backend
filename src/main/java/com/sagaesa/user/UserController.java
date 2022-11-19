@@ -15,11 +15,14 @@ public class UserController {
 
     private final UserService userService;
 
+    /*
     @ResponseBody
     @PostMapping("")
     public PostSignupReq signup(@RequestBody PostSignupReq postSignupReq) {
 
-        long userId = userService.createUser(postSignupReq);
-
+        Long userId = userService.createUser(postSignupReq);
+        return ;
     }
+    */
+
 }
