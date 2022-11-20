@@ -1,7 +1,8 @@
 package com.sagaesa.record;
 
 import com.sagaesa.record.dto.RecordCreateDto;
-import com.sagaesa.record.dto.RecordFindOneDto;
+import com.sagaesa.record.dto.RecordFindDto;
+import com.sagaesa.record.dto.RecordUpdateDto;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -33,7 +35,30 @@ public class RecordController {
     }
 
     @GetMapping("/details")
-        public ResponseEntity<RecordFindOneDto> recordFindOne(@RequestParam("recordId") Long recordId) {
+    public ResponseEntity<RecordFindDto> recordFindOne(@RequestParam("recordId") Long recordId) {
         return new ResponseEntity<>(recordService.findOne(recordId), HttpStatus.OK);
+    }
+
+    @GetMapping("/lists")
+    public ResponseEntity<List<RecordFindDto>> recordFineAll(@RequestParam("userId") Long userId) {
+        return new ResponseEntity<>(recordService.findAll(userId), HttpStatus.OK);
+    }
+
+    @PatchMapping
+    public ResponseEntity<RecordFindDto> recordUpdate(@RequestBody Map<String, String> recordRequest) {
+        RecordUpdateDto recordUpdateDto = RecordUpdateDto.builder()
+                .recordId(Long.valueOf(recordRequest.get("recordId")))
+                .date(Date.valueOf(recordRequest.get("date")))
+                .content(recordRequest.get("content"))
+                .build();
+
+        return new ResponseEntity<>(recordService.update(recordUpdateDto), HttpStatus.OK);
+    }
+
+    @DeleteMapping
+    public ResponseEntity recordDelete(@RequestParam("recordId") Long recordId) {
+        recordService.delete(recordId);
+
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

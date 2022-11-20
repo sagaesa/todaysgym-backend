@@ -21,4 +21,5 @@ public class Title {
 
     @Column(unique = true, nullable = false, length = 20)
     private String name;
+
 }
