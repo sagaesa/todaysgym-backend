@@ -11,8 +11,12 @@ import java.sql.Date;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostFindDto {
+public class PostFindOneDto {
+    private Long userId;
+
     private Date date;
 
     private String title;
+
+    private String content;
 }

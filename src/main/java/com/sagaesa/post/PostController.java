@@ -1,7 +1,9 @@
 package com.sagaesa.post;
 
 import com.sagaesa.post.dto.PostCreateDto;
-import com.sagaesa.post.dto.PostFindDto;
+import com.sagaesa.post.dto.PostFindAllDto;
+import com.sagaesa.post.dto.PostFindOneDto;
+import com.sagaesa.post.dto.PostUpdateDto;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +23,7 @@ public class PostController {
     private final PostService postService;
 
     @PostMapping
-    public ResponseEntity recordPost(@RequestBody Map<String, String> recordRequest) {
+    public ResponseEntity postCreate(@RequestBody Map<String, String> recordRequest) {
         PostCreateDto postCreateDto = PostCreateDto.builder()
                 .userId(Long.valueOf((recordRequest.get("userId"))))
                 .categoryId(Long.valueOf(recordRequest.get("categoryId")))
@@ -30,15 +32,37 @@ public class PostController {
                 .content(recordRequest.get("content"))
                 .build();
 
-        postService.recordPost(postCreateDto);
+        postService.postCreate(postCreateDto);
 
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @GetMapping("lists")
-    public ResponseEntity<List<PostFindDto>> recordFineAll(@RequestParam("userId") Long userId) {
+    @GetMapping("/lists")
+    public ResponseEntity<List<PostFindAllDto>> postFineAll(@RequestParam("userId") Long userId) {
         return new ResponseEntity<>(postService.findAll(userId), HttpStatus.OK);
     }
 
+    @GetMapping("/details")
+    public ResponseEntity<PostFindOneDto> postFindOne(@RequestParam("postId") Long postId) {
+        return new ResponseEntity<>(postService.findOne(postId), HttpStatus.OK);
+    }
 
+    @PatchMapping
+    public ResponseEntity<PostFindOneDto> postUpdate(@RequestBody Map<String, String> postRequest) {
+        PostUpdateDto postUpdateDto = PostUpdateDto.builder()
+                .postId(Long.valueOf(postRequest.get("postId")))
+                .date(Date.valueOf(postRequest.get("date")))
+                .title(postRequest.get("title"))
+                .content(postRequest.get("content"))
+                .build();
+
+        return new ResponseEntity<>(postService.update(postUpdateDto), HttpStatus.OK);
+    }
+
+    @DeleteMapping
+    public ResponseEntity postDelete(@RequestParam("postId") Long postId) {
+        postService.delete(postId);
+
+        return new ResponseEntity(HttpStatus.OK);
+    }
 }

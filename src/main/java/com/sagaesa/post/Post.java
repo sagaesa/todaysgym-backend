@@ -47,4 +47,10 @@ public class Post {
         this.userId = userId;
         this.categoryId = categoryId;
     }
+
+    public void update(Date date, String title, String content) {
+        this.date = date;
+        this.title = title;
+        this.content = content;
+    }
 }

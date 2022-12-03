@@ -1,7 +1,9 @@
 package com.sagaesa.post;
 
 import com.sagaesa.post.dto.PostCreateDto;
-import com.sagaesa.post.dto.PostFindDto;
+import com.sagaesa.post.dto.PostFindAllDto;
+import com.sagaesa.post.dto.PostFindOneDto;
+import com.sagaesa.post.dto.PostUpdateDto;
 import com.sagaesa.user.User;
 import com.sagaesa.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +19,7 @@ public class PostService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
 
-    public void recordPost(PostCreateDto postCreateDto) {
+    public void postCreate(PostCreateDto postCreateDto) {
         Post post = new Post();
 
         Optional<User> user = userRepository.findById(postCreateDto.getUserId());
@@ -27,20 +29,48 @@ public class PostService {
         postRepository.save(post);
     }
 
-    public List<PostFindDto> findAll(Long userId) {
+    public List<PostFindAllDto> findAll(Long userId) {
         Optional<User> user = userRepository.findById(userId);
         List<Post> posts = postRepository.findAllByCategoryId(user.get().getCategoryId());
-        List<PostFindDto> postFindDtos = new ArrayList<>();
+        List<PostFindAllDto> postFindAllDtos = new ArrayList<>();
 
         for (Post post : posts) {
-            PostFindDto postFindDto = PostFindDto.builder()
+            PostFindAllDto postFindAllDto = PostFindAllDto.builder()
                     .date(post.getDate())
                     .title(post.getTitle())
                     .build();
 
-            postFindDtos.add(postFindDto);
+            postFindAllDtos.add(postFindAllDto);
         }
 
-        return postFindDtos;
+        return postFindAllDtos;
+    }
+
+    public PostFindOneDto findOne(Long postId) {
+        Optional<Post> post = postRepository.findById(postId);
+
+
+        return PostFindOneDto.builder()
+                .userId(post.get().getUserId().getId())
+                .date(post.get().getDate())
+                .title(post.get().getTitle())
+                .content(post.get().getContent())
+                .build();
+    }
+
+    public PostFindOneDto update(PostUpdateDto postUpdateDto) {
+        Post post = postRepository.findById(postUpdateDto.getPostId()).orElseThrow();
+        post.update(postUpdateDto.getDate(), postUpdateDto.getTitle(), postUpdateDto.getContent());
+
+        return PostFindOneDto.builder()
+                .userId(post.getUserId().getId())
+                .date(post.getDate())
+                .title(post.getTitle())
+                .content(post.getContent())
+                .build();
+    }
+
+    public void delete(Long postId) {
+        postRepository.deleteById(postId);
     }
 }
