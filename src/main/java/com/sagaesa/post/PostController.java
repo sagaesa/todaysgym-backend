@@ -23,13 +23,13 @@ public class PostController {
     private final PostService postService;
 
     @PostMapping
-    public ResponseEntity postCreate(@RequestBody Map<String, String> recordRequest) {
+    public ResponseEntity postCreate(@RequestBody Map<String, String> postRequest) {
         PostCreateDto postCreateDto = PostCreateDto.builder()
-                .userId(Long.valueOf((recordRequest.get("userId"))))
-                .categoryId(Long.valueOf(recordRequest.get("categoryId")))
-                .date(Date.valueOf(recordRequest.get("date")))
-                .title(recordRequest.get("title"))
-                .content(recordRequest.get("content"))
+                .userId(Long.valueOf((postRequest.get("userId"))))
+                .categoryId(Long.valueOf(postRequest.get("categoryId")))
+                .date(Date.valueOf(postRequest.get("date")))
+                .title(postRequest.get("title"))
+                .content(postRequest.get("content"))
                 .build();
 
         postService.postCreate(postCreateDto);
