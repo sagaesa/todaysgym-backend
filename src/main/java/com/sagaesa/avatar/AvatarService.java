@@ -11,10 +11,4 @@ import javax.transaction.Transactional;
 public class AvatarService {
     private final AvatarRepository avatarRepository;
 
-
-    //@Transactional
-    //public void save(User user) {
-        //avatarRepository.save();
-   //}
-
 }

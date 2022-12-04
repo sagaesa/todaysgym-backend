@@ -45,7 +45,16 @@ public class UserService {
     }
 
 
+    public Long login(PostLoginReq postLoginReq) {
+        User user = userRepository.findById(postLoginReq.getId()).get();
 
+        // 비밀번호가 같다면 userId return
+        if(user.getPassword().equals(postLoginReq.getPassword())) {
+            return user.getId();
+        } else { // 비밀번호가 다르다면 -1 return
+            return -1L;
+        }
+    }
 
 
 }
