@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Date;
 
 @Entity
 @Builder
@@ -38,4 +38,19 @@ public class Post {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User userId;
+
+
+    public void save(Date date, String title, String content, User userId, Category categoryId) {
+        this.date = date;
+        this.title = title;
+        this.content = content;
+        this.userId = userId;
+        this.categoryId = categoryId;
+    }
+
+    public void update(Date date, String title, String content) {
+        this.date = date;
+        this.title = title;
+        this.content = content;
+    }
 }
