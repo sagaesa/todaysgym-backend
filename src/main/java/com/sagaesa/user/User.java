@@ -37,4 +37,16 @@ public class User {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category categoryId;
+
+    /*
+    public User(Long id, String name, String password, String nickname, Category category) {
+        this.id = id;
+        this.name = name;
+        this.password = password;
+        this.nickname = nickname;
+        this.categoryId = category;
+        this.avatarId = null;
+    }
+    */
+
 }
