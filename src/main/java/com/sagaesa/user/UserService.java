@@ -29,14 +29,14 @@ public class UserService {
 
     public Long create(PostSignupReq postSignupReq) {
 
-        Category category = categoryRepository.getByCategoryId(postSignupReq.getCategoryId()).orElse(null);
+        //Category category = categoryRepository.getByCategoryId(postSignupReq.getCategoryId()).orElse(null);
 
         User user = User.builder()
                 .name(postSignupReq.getName())
                 .password(postSignupReq.getPassword())
                 .nickname(postSignupReq.getNickname())
                 .avatarId(null)
-                .categoryId(category)
+                .categoryId(null)
                 .build();
 
         save(user);
@@ -46,7 +46,7 @@ public class UserService {
 
 
     public Long login(PostLoginReq postLoginReq) {
-        User user = userRepository.findById(postLoginReq.getId()).get();
+        User user = userRepository.getByName(postLoginReq.getName()).orElse(null);
 
         // 비밀번호가 같다면 userId return
         if(user.getPassword().equals(postLoginReq.getPassword())) {
