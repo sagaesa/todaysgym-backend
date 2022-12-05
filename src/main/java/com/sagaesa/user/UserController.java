@@ -21,16 +21,19 @@ public class UserController {
     @ResponseBody
     @PostMapping("/signup")
     public ResponseEntity signup(@RequestBody PostSignupReq postSignupReq) {
-        userService.create(postSignupReq);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(userService.create(postSignupReq), HttpStatus.OK);
     }
 
     @ResponseBody
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody PostLoginReq postLoginReq) {
-        userService.login(postLoginReq);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(userService.login(postLoginReq), HttpStatus.OK);
     }
 
+    @ResponseBody
+    @GetMapping("")
+    public ResponseEntity getProfile(@RequestParam("userId") Long userId) {
+        return new ResponseEntity(userService.getProfile(userId), HttpStatus.OK);
+    }
 
 }

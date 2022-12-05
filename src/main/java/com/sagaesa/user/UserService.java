@@ -6,6 +6,7 @@ import com.sagaesa.avatar.AvatarService;
 import com.sagaesa.category.Category;
 import com.sagaesa.category.CategoryRepository;
 import com.sagaesa.post.Post;
+import com.sagaesa.user.dto.GetUserProfileRes;
 import com.sagaesa.user.dto.PostLoginReq;
 import com.sagaesa.user.dto.PostSignupReq;
 import lombok.RequiredArgsConstructor;
@@ -29,14 +30,14 @@ public class UserService {
 
     public Long create(PostSignupReq postSignupReq) {
 
-        //Category category = categoryRepository.getByCategoryId(postSignupReq.getCategoryId()).orElse(null);
+        Category category = categoryRepository.getByCategoryId(postSignupReq.getCategoryId()).orElse(null);
 
         User user = User.builder()
                 .name(postSignupReq.getName())
                 .password(postSignupReq.getPassword())
                 .nickname(postSignupReq.getNickname())
                 .avatarId(null)
-                .categoryId(null)
+                .categoryId(category)
                 .build();
 
         save(user);
@@ -56,5 +57,13 @@ public class UserService {
         }
     }
 
+    public GetUserProfileRes getProfile(Long userId) {
+        User user = userRepository.findById(userId).get();
+
+        return GetUserProfileRes.builder()
+                .nickname(user.getNickname())
+                .avatarId(user.getAvatarId().getId())
+                .build();
+    }
 
 }
